@@ -18,6 +18,26 @@ interface MovieCardProps {
 const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
   const [isHovered, setIsHovered] = useState(false);
 
+  const handlePlay = () => {
+    console.log(`Playing ${movie.title}`);
+    alert(`Playing ${movie.title}...`);
+  };
+
+  const handleAddToList = () => {
+    console.log(`Adding ${movie.title} to My List`);
+    alert(`Added ${movie.title} to My List!`);
+  };
+
+  const handleLike = () => {
+    console.log(`Liked ${movie.title}`);
+    alert(`Liked ${movie.title}!`);
+  };
+
+  const handleMoreInfo = () => {
+    console.log(`More info for ${movie.title}`);
+    alert(`More information about ${movie.title} would be displayed here.`);
+  };
+
   return (
     <div 
       className="relative flex-shrink-0 w-40 md:w-60 transition-all duration-300 cursor-pointer group"
@@ -30,6 +50,10 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
           src={movie.image}
           alt={movie.title}
           className="w-full h-24 md:h-36 object-cover transition-all duration-300 group-hover:scale-110"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.src = "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=300&h=450&fit=crop";
+          }}
         />
         
         {/* Overlay on hover */}
@@ -47,6 +71,10 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
               src={movie.image}
               alt={movie.title}
               className="w-full h-40 object-cover rounded-t-md"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.src = "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=300&h=450&fit=crop";
+              }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent rounded-t-md" />
           </div>
@@ -56,17 +84,29 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
             {/* Action Buttons */}
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center space-x-2">
-                <button className="w-8 h-8 bg-white rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors">
+                <button 
+                  onClick={handlePlay}
+                  className="w-8 h-8 bg-white rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors"
+                >
                   <Play className="w-4 h-4 text-black fill-current ml-0.5" />
                 </button>
-                <button className="w-8 h-8 border-2 border-gray-400 rounded-full flex items-center justify-center hover:border-white transition-colors">
+                <button 
+                  onClick={handleAddToList}
+                  className="w-8 h-8 border-2 border-gray-400 rounded-full flex items-center justify-center hover:border-white transition-colors"
+                >
                   <Plus className="w-4 h-4 text-white" />
                 </button>
-                <button className="w-8 h-8 border-2 border-gray-400 rounded-full flex items-center justify-center hover:border-white transition-colors">
+                <button 
+                  onClick={handleLike}
+                  className="w-8 h-8 border-2 border-gray-400 rounded-full flex items-center justify-center hover:border-white transition-colors"
+                >
                   <ThumbsUp className="w-4 h-4 text-white" />
                 </button>
               </div>
-              <button className="w-8 h-8 border-2 border-gray-400 rounded-full flex items-center justify-center hover:border-white transition-colors">
+              <button 
+                onClick={handleMoreInfo}
+                className="w-8 h-8 border-2 border-gray-400 rounded-full flex items-center justify-center hover:border-white transition-colors"
+              >
                 <ChevronDown className="w-4 h-4 text-white" />
               </button>
             </div>

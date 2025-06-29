@@ -3,12 +3,22 @@ import React from 'react';
 import { Play, Info } from 'lucide-react';
 
 const HeroSection = () => {
+  const handlePlay = () => {
+    console.log('Play button clicked');
+    alert('Playing Stranger Things...');
+  };
+
+  const handleMoreInfo = () => {
+    console.log('More Info button clicked');
+    alert('More information about Stranger Things would be displayed here.');
+  };
+
   return (
     <div className="relative h-screen">
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
-          src="https://images.unsplash.com/photo-1489599510025-8c8ad0fa7ae2?w=1920&h=1080&fit=crop"
+          src="https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=1920&h=1080&fit=crop"
           alt="Hero Background"
           className="w-full h-full object-cover"
         />
@@ -27,11 +37,17 @@ const HeroSection = () => {
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 animate-fade-in">
-          <button className="flex items-center justify-center px-8 py-3 bg-white text-black rounded font-semibold hover:bg-gray-200 transition-all duration-200 hover:scale-105">
+          <button 
+            onClick={handlePlay}
+            className="flex items-center justify-center px-8 py-3 bg-white text-black rounded font-semibold hover:bg-gray-200 transition-all duration-200 hover:scale-105"
+          >
             <Play className="w-5 h-5 mr-2 fill-current" />
             Play
           </button>
-          <button className="flex items-center justify-center px-8 py-3 bg-gray-600/70 text-white rounded font-semibold hover:bg-gray-600/90 transition-all duration-200 hover:scale-105">
+          <button 
+            onClick={handleMoreInfo}
+            className="flex items-center justify-center px-8 py-3 bg-gray-600/70 text-white rounded font-semibold hover:bg-gray-600/90 transition-all duration-200 hover:scale-105"
+          >
             <Info className="w-5 h-5 mr-2" />
             More Info
           </button>
