@@ -33,7 +33,7 @@ const Footer = () => {
           <div className="space-y-3">
             <a href="#" className="block hover:text-white transition-colors text-sm">Legal Notices</a>
             <a href="#" className="block hover:text-white transition-colors text-sm">Cookie Preferences</a>
-            <a href="#" className="block hover:text-white transition-colors text-s,">Corporate Information</a>
+            <a href="#" className="block hover:text-white transition-colors text-sm">Corporate Information</a>
             <a href="#" className="block hover:text-white transition-colors text-sm">Contact Us</a>
           </div>
           
