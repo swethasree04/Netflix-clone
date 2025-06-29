@@ -1,11 +1,14 @@
 
 import React, { useState, useEffect } from 'react';
 import { Search, Bell, User } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,9 +19,9 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleNavClick = (section: string) => {
+  const handleNavClick = (section: string, path: string) => {
     console.log(`Navigating to ${section}`);
-    alert(`${section} section - This would navigate to the ${section} page`);
+    navigate(path);
   };
 
   const handleSearchToggle = () => {
@@ -57,7 +60,7 @@ const Header = () => {
         <div className="flex items-center space-x-8">
           <h1 
             className="text-red-600 text-2xl md:text-3xl font-bold cursor-pointer hover:text-red-500 transition-colors"
-            onClick={() => handleNavClick('Home')}
+            onClick={() => handleNavClick('Home', '/')}
           >
             NETFLIX
           </h1>
@@ -65,32 +68,42 @@ const Header = () => {
           {/* Navigation */}
           <nav className="hidden md:flex space-x-6">
             <button 
-              onClick={() => handleNavClick('Home')}
-              className="hover:text-gray-300 transition-colors font-medium"
+              onClick={() => handleNavClick('Home', '/')}
+              className={`hover:text-gray-300 transition-colors font-medium ${
+                location.pathname === '/' ? 'text-white' : 'text-gray-400'
+              }`}
             >
               Home
             </button>
             <button 
-              onClick={() => handleNavClick('TV Shows')}
-              className="hover:text-gray-300 transition-colors font-medium"
+              onClick={() => handleNavClick('TV Shows', '/tv-shows')}
+              className={`hover:text-gray-300 transition-colors font-medium ${
+                location.pathname === '/tv-shows' ? 'text-white' : 'text-gray-400'
+              }`}
             >
               TV Shows
             </button>
             <button 
-              onClick={() => handleNavClick('Movies')}
-              className="hover:text-gray-300 transition-colors font-medium"
+              onClick={() => handleNavClick('Movies', '/movies')}
+              className={`hover:text-gray-300 transition-colors font-medium ${
+                location.pathname === '/movies' ? 'text-white' : 'text-gray-400'
+              }`}
             >
               Movies
             </button>
             <button 
-              onClick={() => handleNavClick('New & Popular')}
-              className="hover:text-gray-300 transition-colors font-medium"
+              onClick={() => handleNavClick('New & Popular', '/new-popular')}
+              className={`hover:text-gray-300 transition-colors font-medium ${
+                location.pathname === '/new-popular' ? 'text-white' : 'text-gray-400'
+              }`}
             >
               New & Popular
             </button>
             <button 
-              onClick={() => handleNavClick('My List')}
-              className="hover:text-gray-300 transition-colors font-medium"
+              onClick={() => handleNavClick('My List', '/my-list')}
+              className={`hover:text-gray-300 transition-colors font-medium ${
+                location.pathname === '/my-list' ? 'text-white' : 'text-gray-400'
+              }`}
             >
               My List
             </button>
