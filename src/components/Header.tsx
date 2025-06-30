@@ -7,6 +7,7 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -15,8 +16,21 @@ const Header = () => {
       setIsScrolled(window.scrollY > 100);
     };
 
+    // Check login status
+    const checkLoginStatus = () => {
+      setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
+    };
+
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    checkLoginStatus();
+    
+    // Listen for storage changes to update login status
+    window.addEventListener('storage', checkLoginStatus);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('storage', checkLoginStatus);
+    };
   }, []);
 
   const handleNavClick = (section: string, path: string) => {
@@ -35,18 +49,25 @@ const Header = () => {
     e.preventDefault();
     if (searchQuery.trim()) {
       console.log('Searching for:', searchQuery);
-      alert(`Searching for: "${searchQuery}"`);
+      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      setShowSearch(false);
+      setSearchQuery('');
     }
   };
 
   const handleNotifications = () => {
+    if (!isLoggedIn) {
+      alert('Please sign in to view notifications');
+      navigate('/profile');
+      return;
+    }
     console.log('Opening notifications');
     alert('Notifications - This would show your notifications');
   };
 
   const handleProfile = () => {
     console.log('Opening profile menu');
-    alert('Profile Menu - This would show account options, settings, sign out, etc.');
+    navigate('/profile');
   };
 
   return (
@@ -120,7 +141,7 @@ const Header = () => {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search..."
+                  placeholder="Search movies and TV shows..."
                   className="bg-black/70 border border-gray-600 rounded px-3 py-1 text-white placeholder-gray-400 focus:outline-none focus:border-white w-64"
                   autoFocus
                 />
@@ -148,6 +169,7 @@ const Header = () => {
           <div 
             className="w-8 h-8 bg-red-600 rounded cursor-pointer hover:bg-red-700 transition-colors flex items-center justify-center"
             onClick={handleProfile}
+            title={isLoggedIn ? 'Profile' : 'Sign In'}
           >
             <User className="w-5 h-5" />
           </div>
