@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Play, Plus, ThumbsUp, ChevronDown } from 'lucide-react';
 
 interface Movie {
@@ -17,25 +18,33 @@ interface MovieCardProps {
 
 const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const navigate = useNavigate();
 
-  const handlePlay = () => {
+  const handlePlay = (e: React.MouseEvent) => {
+    e.stopPropagation();
     console.log(`Playing ${movie.title}`);
     alert(`Playing ${movie.title}...`);
   };
 
-  const handleAddToList = () => {
+  const handleAddToList = (e: React.MouseEvent) => {
+    e.stopPropagation();
     console.log(`Adding ${movie.title} to My List`);
     alert(`Added ${movie.title} to My List!`);
   };
 
-  const handleLike = () => {
+  const handleLike = (e: React.MouseEvent) => {
+    e.stopPropagation();
     console.log(`Liked ${movie.title}`);
     alert(`Liked ${movie.title}!`);
   };
 
-  const handleMoreInfo = () => {
-    console.log(`More info for ${movie.title}`);
-    alert(`More information about ${movie.title} would be displayed here.`);
+  const handleMoreInfo = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    navigate(`/movie/${movie.id}`);
+  };
+
+  const handleCardClick = () => {
+    navigate(`/movie/${movie.id}`);
   };
 
   return (
@@ -43,6 +52,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
       className="relative flex-shrink-0 w-40 md:w-60 transition-all duration-300 cursor-pointer group"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onClick={handleCardClick}
     >
       {/* Main Image */}
       <div className="relative overflow-hidden rounded-md">
